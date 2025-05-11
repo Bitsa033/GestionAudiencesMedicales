@@ -21,7 +21,7 @@
                             <td>Heure de debut</td>
                             <td>Heure de fin</td>
                             <td>
-                                <a href="{{url('new_audience')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Nouvel enregistrement</a>
+                                <a href="{{url('new_agenda')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Nouvel enregistrement</a>
                             </td>
                         </tr>
                     </thead>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agenda;
 use App\Http\Requests\StoreAgendaRequest;
 use App\Http\Requests\UpdateAgendaRequest;
+use App\Models\Medecin;
 
 class AgendaController extends Controller
 {
@@ -25,8 +26,10 @@ class AgendaController extends Controller
      */
     public function create()
     {
+        $medecins=Medecin::all();
+
         return view("agendas.create",[
-        
+            'medecins'=>$medecins
         ]);
     }
 
@@ -36,7 +39,7 @@ class AgendaController extends Controller
     public function store(StoreAgendaRequest $request)
     {
         $medecin=$request->get('medecin');
-        $day_of_week=$request->get('day');
+        $day_of_week=$request->get('day_of_week');
         $start_time=$request->get('start_time');
         $end_time=$request->get('end_time');
         Agenda::create([
@@ -46,7 +49,7 @@ class AgendaController extends Controller
             'end_time'=>$end_time,
         ]);
 
-        return route('all_agendas?create=ok');
+        Return redirect("all_agendas?create=ok");
     }
 
     /**
