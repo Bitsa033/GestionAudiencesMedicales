@@ -10,17 +10,17 @@ class Medecin extends Model
     use HasFactory;
     protected $fillable = ['name', 'email', 'phone', 'speciality_id', 'is_available'];
 
-    public function specialtie()
+    public function specialties()
     {
         return $this->belongsTo(Specialitie::class);
     }
 
-    public function Audience()
+    public function Audiences()
     {
         return $this->hasMany(Audience::class);
     }
 
-    public function Agenda()
+    public function Agendas()
     {
         return $this->hasMany(Agenda::class);
     }

@@ -15,19 +15,21 @@ class AudienceService
     /**
      * Réserver une audience avec tentative intelligente
      */
-    public function createAudience(int $clientId, int $specialityId, string $preferredDateTime, string $reason = null): ?Audience
+    public function createAudience(int $clientId, int $specialityId, string $preferredDate,$preferredTime, string $reason = null): ?Audience
     {
-        $scheduledAt = Carbon::parse($preferredDateTime);
+        $scheduledDateAt = Carbon::parse($preferredDate);
+        $scheduledTimeAt = Carbon::parse($preferredTime);
 
-        return DB::transaction(function () use ($clientId, $specialityId, $scheduledAt, $reason) {
+
+        return DB::transaction(function () use ($clientId, $specialityId, $scheduledDateAt,$scheduledTimeAt, $reason) {
 
             for ($attempt = 0; $attempt <= $this->maxAttempts; $attempt++) {
                 
                 // Chercher médecin disponible
                 $medecin = Medecin::where('speciality_id', $specialityId)
                             ->where('is_available', true)
-                            ->whereDoesntHave('audiences', function ($query) use ($scheduledAt) {
-                                $query->where('scheduled_at', $scheduledAt);
+                            ->whereDoesntHave('audiences', function ($query) use ($scheduledDateAt) {
+                                $query->where('scheduled_date_at', $scheduledDateAt);
                             })
                             ->first();
 
@@ -37,14 +39,15 @@ class AudienceService
                         'client_id' => $clientId,
                         'medecin_id' => $medecin->id,
                         'speciality_id' => $specialityId,
-                        'scheduled_at' => $scheduledAt,
+                        'scheduled_date_at' => $scheduledDateAt,
+                        'scheduled_time_at' => $scheduledTimeAt,
                         'status' => 'confirmed',
                         'reason' => $reason,
                     ]);
                 }
 
-                // Sinon, essayer +30 minutes
-                $scheduledAt->addMinutes(30);
+                // Sinon, essayer +10 minutes
+                $scheduledDateAt->addMinutes(10);
             }
 
             return null; // Aucun médecin disponible après toutes les tentatives

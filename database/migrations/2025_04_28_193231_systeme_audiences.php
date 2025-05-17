@@ -54,7 +54,8 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained('clients')->onDelete('cascade');
             $table->foreignId('medecin_id')->constrained('medecins')->onDelete('cascade');
             $table->foreignId('speciality_id')->constrained('specialities')->onDelete('cascade');
-            $table->dateTime('scheduled_at');
+            $table->date('scheduled_date_at');
+            $table->time('scheduled_time_at');
             $table->enum('status', ['pending', 'confirmed', 'cancelled', 'rescheduled', 'completed'])->default('pending');
             $table->text('reason')->nullable();
             $table->text('cancellation_reason')->nullable();

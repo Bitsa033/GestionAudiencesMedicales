@@ -10,11 +10,12 @@ class Audience extends Model
     use HasFactory;
     protected $fillable = [
         'client_id', 'medecin_id', 'speciality_id', 
-        'scheduled_at', 'status', 'reason', 'cancellation_reason', 'rescheduled_to'
+        'scheduled_date_at','scheduled_time_at', 'status', 'reason', 'cancellation_reason', 'rescheduled_to'
     ];
 
     protected $casts = [
-        'scheduled_at' => 'datetime',
+        'scheduled_date_at' => 'date',
+        // 'scheduled_time_at' => 'time',
     ];
 
     public function client()

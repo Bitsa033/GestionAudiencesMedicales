@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Audience;
 use App\Http\Requests\StoreAudienceRequest;
 use App\Http\Requests\UpdateAudienceRequest;
+use App\Models\Client;
+use App\Models\Specialitie;
 use App\Services\AudienceService;
 
 class AudienceController extends Controller
@@ -34,7 +36,13 @@ class AudienceController extends Controller
      */
     public function create()
     {
-        //
+        $patients=Client::all();
+        $specialities=Specialitie::all();
+
+        return view("audiences.create",[
+            'patients'=>$patients,
+            'specialities'=>$specialities
+        ]);
     }
 
     /**
@@ -43,25 +51,29 @@ class AudienceController extends Controller
     public function store(StoreAudienceRequest $request)
     {
         $request->validate([
-            'client_id' => 'required|exists:clients,id',
+            'patient' => 'required|exists:clients,id',
             // 'medecin_id' => 'required|exists:medecins,id',
-            'speciality_id' => 'required|exists:specialties,id',
-            'scheduled_at' => 'required|date',
+            'specialitie' => 'required|exists:specialities,id',
+            'scheduled_date_at' => 'required|date',
+            'scheduled_time_at' => 'required|string',
             'reason' => 'nullable|string',
         ]);
 
         $appointment = $this->audienceService->createAudience(
-            $request->client_id,
-            $request->specialty_id,
-            $request->scheduled_at,
+            $request->patient,
+            $request->specialitie,
+            $request->scheduled_date_at,
+            $request->scheduled_time_at,
             $request->reason
         );
 
         if (!$appointment) {
             return response()->json(['message' => 'Aucun médecin disponible à ce moment.'], 422);
+            // return redirect("all_audiences?error=AucunMedecinDisponibleACeMoment");
         }
 
-        return response()->json(['message' => 'Rendez-vous créé avec succès.', 'appointment' => $appointment]);
+        // return response()->json(['message' => 'Rendez-vous créé avec succès.', 'appointment' => $appointment]);
+        return redirect("all_audiences?create=ok");
     
     }
 
