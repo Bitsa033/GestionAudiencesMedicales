@@ -29,7 +29,7 @@
                     <tbody>
                         @foreach ($agendas as $item)
                         <tr>
-                            <td>{{$item->medecin_id}}</td>
+                            <td>{{$item->medecins->name}}</td>
                             <td>{{$item->day_of_week}}</td>
                             <td>{{$item->start_time}}</td>
                             <td>{{$item->end_time}}</td>

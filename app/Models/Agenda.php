@@ -14,4 +14,9 @@ class Agenda extends Model
         "start_time",
         "end_time"
     ];
+
+    public function Medecins()
+    {
+        return $this->belongsTo(Medecin::class,'medecin_id');
+    }
 }

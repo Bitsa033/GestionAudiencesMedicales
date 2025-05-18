@@ -30,9 +30,10 @@
                     <tbody>
                         @foreach ($audiences as $item)
                         <tr>
-                            <td>{{$item->client_id}}</td>
-                            <td>{{$item->medecin_id}}</td>
-                            <td>{{$item->scheduled_date_at}} {{$item->scheduled_time_at}}</td>
+                            <td>{{$item->client->name}}</td>
+                            <td>{{$item->medecin->name}}</td>
+                            <td>{{$item->scheduled_date_at->translatedFormat('l d F Y')}} 
+                                à {{$item->scheduled_time_at->format('H\h i') }} </td>
                             <td>{{$item->status}}</td>
                             <td>{{$item->reason}}</td>
                             <td style="width: 45%;">

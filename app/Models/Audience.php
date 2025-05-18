@@ -15,21 +15,21 @@ class Audience extends Model
 
     protected $casts = [
         'scheduled_date_at' => 'date',
-        // 'scheduled_time_at' => 'time',
+        'scheduled_time_at' => 'datetime',
     ];
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class,'client_id');
     }
 
     public function medecin()
     {
-        return $this->belongsTo(Medecin::class);
+        return $this->belongsTo(Medecin::class,'medecin_id');
     }
 
-    public function specialty()
+    public function speciality()
     {
-        return $this->belongsTo(Specialitie::class);
+        return $this->belongsTo(Specialitie::class,'speciality_id');
     }
 }

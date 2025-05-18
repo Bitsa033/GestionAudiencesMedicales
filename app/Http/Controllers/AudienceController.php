@@ -24,7 +24,7 @@ class AudienceController extends Controller
      */
     public function index()
     {
-        $audiences=Audience::all();
+        $audiences=Audience::with(['client','medecin','speciality'])->get();
 
         return view("audiences.index",[
             "audiences"=>$audiences

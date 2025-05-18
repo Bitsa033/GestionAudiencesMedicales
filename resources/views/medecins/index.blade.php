@@ -32,7 +32,7 @@
                             <td>{{$item->name}}</td>
                             <td>{{$item->phone}}</td>
                             <td>{{$item->address}}</td>
-                            <td>{{$item->speciality_id}}</td>
+                            <td>{{$item->specialities->name}}</td>
                             <td style="width: 45%;">
                                 <a href="{{route('edit_patient',$item->id)}}" class="btn btn-warning"> <i class="fa fa-pen"></i> Modifier</a>
                                 <a href="{{route('destroy_patient',$item->id)}}" class="btn btn-danger"> <i class="fa fa-trash"></i> Supprimer</a>

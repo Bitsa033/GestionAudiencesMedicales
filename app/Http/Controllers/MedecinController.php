@@ -14,8 +14,8 @@ class MedecinController extends Controller
      */
     public function index()
     {
-        $medecins=Medecin::all();
-
+        $medecins=Medecin::with('specialities')->get();
+        // return response()->json($medecins);
         return view('medecins.index',[
             'medecins'=>$medecins
         ]);

@@ -14,8 +14,8 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        $agendas=Agenda::all();
-
+        $agendas=Agenda::with('medecins')->get();
+        // return response()->json($agendas);
         return view("agendas.index",[
             "agendas"=>$agendas
         ]);
